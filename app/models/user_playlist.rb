@@ -1,9 +1,30 @@
 class UserPlaylist
   def initialize(username)
     @username = username
-    p artist_names
   end
 
+  def build!
+    p artist_names
+    spotify = ::Services::SpotifyApi.new
+    # Get headline artists of gigs and
+    # Get Spotify artist ids
+    spotify_artists = artist_names.map do |artist_name|
+      spotify.get_artist(artist_name)
+    end
+    # p spotify_artists
+    spotify_artists.reject!(&:nil?)
+    # Get top tracks for each
+    playlist_tracks = spotify_artists.map do |artist|
+      spotify.top_tracks(artist, :GB)
+    end
+    
+    p playlist_tracks.flatten.map(&:uri)
+    # Create user playlist
+
+    # Add to user playlist
+  end
+
+  # TODO: strip country suffix?
   def artist_names
     @artist_names ||= begin
       response = ::Services::SongkickApi.gigography(@username)

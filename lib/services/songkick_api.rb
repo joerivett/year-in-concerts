@@ -5,7 +5,7 @@ module Services
       API_KEY = ENV['SONGKICK_API_KEY']
       API_ENDPOINT = 'http://api.songkick.com/api/3.0'
 
-      def gigography(username)
+      def gigography(username, time_limit=nil)
         get("/users/#{username}/gigography.json")
       end
 
