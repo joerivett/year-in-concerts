@@ -1,0 +1,2 @@
+class PlaylistGeneratorController < ApplicationController
+end
