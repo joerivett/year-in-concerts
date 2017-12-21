@@ -3,7 +3,7 @@ require 'services/spotify_api'
 
 class PlaylistGeneratorController < ApplicationController
   def index
-    UserPlaylist.new('rivett').build!
+    # UserPlaylist.new('rivett').build!
   end
 
   def create

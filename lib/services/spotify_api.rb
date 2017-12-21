@@ -18,5 +18,13 @@ module Services
       tracks = artist.top_tracks(country)
       tracks.first(max)
     end
+
+    def create_playlist(name)
+      RSpotify::Playlist.create(name)
+    end
+
+    def add_tracks_to_playlist(playlist, tracks)
+
+    end
   end
 end
