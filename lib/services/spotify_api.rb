@@ -8,9 +8,9 @@ module Services
       RSpotify.authenticate(CLIENT_ID, CLIENT_SECRET)
     end
 
-    def get_artist(name)
+    def get_artist(name, country=:GB)
       # TODO: country?
-      artists = RSpotify::Artist.search(name)
+      artists = RSpotify::Artist.search(name, 1, 0, country)
       artists.first
     end
 
@@ -20,7 +20,7 @@ module Services
     end
 
     def create_playlist(name)
-      RSpotify::Playlist.create(name)
+      # RSpotify::Playlist.create(name)
     end
 
     def add_tracks_to_playlist(playlist, tracks)

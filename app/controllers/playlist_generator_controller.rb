@@ -8,7 +8,9 @@ class PlaylistGeneratorController < ApplicationController
 
   def create
     username = params[:username]
-
-    UserPlaylist.new(username)
+    p params
+    p username
+    # UserPlaylist.new(username).build!
+    render :playlist, layout: false
   end
 end

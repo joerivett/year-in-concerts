@@ -12,7 +12,7 @@ module Services
         page = 1
         loop do
           response = get("/users/#{username}/gigography.json?order=desc&page=#{page}")
-          raise APIError if data['resultsPage']['status'] == 'error'
+          raise APIError if response.data['resultsPage']['status'] == 'error'
 
           results = response.data['resultsPage']['results']
           events += results['event'].map do |event_hash|
@@ -23,6 +23,7 @@ module Services
           break unless get_next_page?(events, max_events, time_limit)
           page += 1
         end
+        events
       end
 
       def get(endpoint)

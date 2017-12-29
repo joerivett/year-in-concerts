@@ -9,11 +9,12 @@ class UserPlaylist
   end
 
   def build!
-    p artist_names
+    return unless @username.present?
+
     spotify = ::Services::SpotifyApi.new
     # Get headline artists of gigs and
     # Get Spotify artist ids
-    spotify_artists = artist_names.map do |artist_name|
+    spotify_artists = artist_names.reverse.map do |artist_name|
       spotify.get_artist(artist_name)
     end
 
@@ -23,11 +24,13 @@ class UserPlaylist
       spotify.top_tracks(artist, :GB)
     end
 
+    # p playlist_tracks.first
+    # playlist_tracks.each { |playlist| }
     # Create user playlist
+    playlist_tracks.flatten.each { |pt| p pt.uri }
     playlist = spotify.create_playlist(PLAYLIST_NAME)
     # Add to user playlist
     spotify.add_tracks_to_playlist(playlist, playlist_tracks.flatten.map(&:uri))
-    p playlist_tracks.flatten.map(&:uri)
 
   end
 
@@ -43,15 +46,15 @@ class UserPlaylist
   end
 
   def previous_year_concerts
-    @past_year_concerts || = begin
+    @past_year_concerts ||= begin
       events = user_concerts
       raise NoEventsError unless events.length > 0
 
       # Only get concerts in 2017
-      events.reject! do |event|
+      events.select! do |event|
         event.date.year == 2017
       end
-      raise NoEventsInPastYearEror unless events.length > 0
+      raise NoEventsInPastYearError unless events.length > 0
       events
     end
   end
