@@ -15,6 +15,8 @@ module Services
           raise APIError if response.data['resultsPage']['status'] == 'error'
 
           results = response.data['resultsPage']['results']
+          break unless results['event'].present?
+
           events += results['event'].map do |event_hash|
             Event.new(event_hash)
           end

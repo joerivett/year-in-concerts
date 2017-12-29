@@ -4,38 +4,62 @@ class UserPlaylist
 
   PLAYLIST_NAME = '2017 In Concerts'
 
+  attr_reader :errors
+
   def initialize(username)
     @username = username
+    @errors = []
   end
 
   def build!
-    return unless @username.present?
+    if @username.blank?
+      @errors << "Please enter a username"
+      return
+    end
 
     spotify = ::Services::SpotifyApi.new
-    # Get headline artists of gigs and
-    # Get Spotify artist ids
-    spotify_artists = artist_names.reverse.map do |artist_name|
-      spotify.get_artist(artist_name)
-    end
 
-    spotify_artists.reject!(&:nil?)
-    # Get top tracks for each artist
-    playlist_tracks = spotify_artists.map do |artist|
-      spotify.top_tracks(artist, :GB)
-    end
+    spotify_artists = get_spotify_artists(spotify)
+    playlist_tracks = get_top_tracks(spotify_artists, spotify)
 
     # p playlist_tracks.first
     # playlist_tracks.each { |playlist| }
     # Create user playlist
     playlist_tracks.flatten.each { |pt| p pt.uri }
-    playlist = spotify.create_playlist(PLAYLIST_NAME)
-    # Add to user playlist
-    spotify.add_tracks_to_playlist(playlist, playlist_tracks.flatten.map(&:uri))
+    build_playlist(playlist_tracks, spotify)
 
+  rescue NoEventsError => e
+    @errors << "Looks like you haven't marked your attendance on any Songkick events"
+  rescue NoEventsInPastYearError => e
+    @errors << "Looks like you haven't been to any events in the past year"
   end
 
   private
 
+  # Get Spotify artist ids
+  def get_spotify_artists(spotify)
+    spotify_artists = artist_names.reverse.map do |artist_name|
+      spotify.get_artist(artist_name)
+    end
+
+    spotify_artists.reject(&:nil?)
+  end
+
+  # Get top tracks for each artist
+  def get_top_tracks(spotify_artists, spotify)
+    spotify_artists.map do |artist|
+      spotify.top_tracks(artist, :GB)
+    end
+  end
+
+  def build_playlist(playlist_tracks, spotify)
+    playlist = spotify.create_playlist(PLAYLIST_NAME)
+    # Add to user playlist
+    spotify.add_tracks_to_playlist(playlist, playlist_tracks.flatten.map(&:uri))
+    playlist
+  end
+
+  # Get headline artists of gigs attended
   # TODO: strip country suffix?
   def artist_names
     @artist_names ||= begin
@@ -64,6 +88,5 @@ class UserPlaylist
     # Only concerts
     events.reject { |event| event.festival? }
   end
-
 
 end

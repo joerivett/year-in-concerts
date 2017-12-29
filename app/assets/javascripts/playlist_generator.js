@@ -19,7 +19,7 @@ var PlaylistGenerator = {
   },
 
   playlistLoaded: function(e) {
-    console.log(e);
+    $('#response').html(e.responseText);
   }
 };
 

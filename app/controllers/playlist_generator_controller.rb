@@ -8,9 +8,11 @@ class PlaylistGeneratorController < ApplicationController
 
   def create
     username = params[:username]
-    p params
-    p username
-    # UserPlaylist.new(username).build!
-    render :playlist, layout: false
+    playlist = UserPlaylist.new(username)
+    playlist.build!
+
+    playlist_view = ViewModels::Playlist.new(playlist)
+
+    render :partial => 'playlist', :object => playlist_view
   end
 end

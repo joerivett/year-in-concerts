@@ -10,7 +10,7 @@ module Services
 
     def get_artist(name, country=:GB)
       # TODO: country?
-      artists = RSpotify::Artist.search(name, 1, 0, country)
+      artists = RSpotify::Artist.search(name, limit: 1, offset: 0, market: country)
       artists.first
     end
 
