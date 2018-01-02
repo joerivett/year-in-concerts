@@ -1,14 +1,34 @@
-<h1>
-  2017 In Concerts
-</h1>
-<img src="/assets/powered-by-songkick-pink.svg" alt="Powered by Songkick"/>
-<form action="/playlist/create" method="post" id="user-form">
-  <label for="username">Your Songkick username:</label>
-  <input type="text" id="username" name="username" />
+<div id="cont">
+  <div class="left">
+    <h1>
+      2017 In Concerts
+    </h1>
+    <p>
+      Remember all those awesome bands you saw in 2017?
+    </p>
+    <p>
+      Relive them all with a personalised Spotify playlist.
+    </p>
+  </div>
+  <div class="right">
+    IMAGE
+  </div>
+  <div class="form-cont">
+    <img src="/assets/powered-by-songkick-pink.svg" alt="Powered by Songkick" id="powered-by-sk"/>
+    <form action="/playlist/create" method="post" id="user-form">
+      <input type="text" id="username" name="username" value="Your Songkick username" class="empty" />
+      <input type="hidden" id="spotify_auth" name="spotify_auth" />
 
-  <input type="submit" value="go" />
-</form>
+      <input type="submit" id="go" value="Let’s go" />
+    </form>
 
-<div id="response">
+    <button id="spotify-connect">
+      Connect to Spotify
+    </button>
+  </div>
+
+  <div id="response">
+
+  </div>
 
 </div>

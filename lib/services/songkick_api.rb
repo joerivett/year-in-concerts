@@ -6,7 +6,7 @@ module Services
       API_KEY = ENV['SONGKICK_API_KEY']
       API_ENDPOINT = 'http://api.songkick.com/api/3.0'
 
-      # Time limit: pull all gigs back to a certain date
+      # time_limit: pull all gigs back to a certain date
       def gigography(username, time_limit = nil)
         events = []
         page = 1
@@ -45,10 +45,10 @@ module Services
       private
 
       def get_next_page?(events, max_events, time_limit = nil)
-        # Keep going as no time limitation
-        return true unless time_limit.present?
         # Got then all already
         return false if events.length == max_events
+        # Keep going as no time limitation
+        return true unless time_limit.present?
         # If oldest event in this batch is before the date limit, return false
         return events.last.date < time_limit
       end

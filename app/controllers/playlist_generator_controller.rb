@@ -7,8 +7,8 @@ class PlaylistGeneratorController < ApplicationController
   end
 
   def create
-    username = params[:username]
-    playlist = UserPlaylist.new(username)
+    sk_username = params[:username]
+    playlist = UserPlaylist.new(sk_username)
     playlist.build!
 
     playlist_view = ViewModels::Playlist.new(playlist)

@@ -19,7 +19,12 @@ module Services
       tracks.first(max)
     end
 
-    def create_playlist(name)
+    def get_user(username, token)
+
+    end
+
+    def create_playlist(username, name)
+      # if playlist exists, delete it
       # RSpotify::Playlist.create(name)
     end
 

@@ -1,3 +1,106 @@
 // Place all the styles related to the playlist_generator controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+#cont
+{
+  text-align: center;
+  margin: auto;
+  width: auto;
+  max-width: 800px;
+}
+
+.left
+{
+  width: 500px;
+  display: inline-block;
+}
+
+.right
+{
+  display: inline-block;
+  width: 300px;
+}
+
+#form-cont
+{
+
+}
+
+#powered-by-sk
+{
+  width: 100px;
+}
+
+#user-form input
+{
+  color: white;
+  font-size: 25px;
+  box-sizing: border-box;
+  letter-spacing: 0.5px;
+}
+
+#username
+{
+  background-color: black;
+  width: 310px;
+  border: 2px solid #444444;
+  border-right: none;
+  padding: 7px;
+  border-top-left-radius: 3px;
+  border-bottom-left-radius: 3px;
+}
+
+#username.empty
+{
+  color: #666666;
+}
+
+#go
+{
+  background-color: #F50F4A;
+  font-weight: 600;
+  margin-left: -7px;
+  transition: all 0.5s;
+  cursor: pointer;
+  border: none;
+  padding: 9px;
+  border-top-right-radius: 3px;
+  border-bottom-right-radius: 3px;
+  text-transform: uppercase;
+}
+
+#go:hover
+{
+  background-color: #ef4570;
+}
+
+#spotify-connect
+{
+  color: #fff;
+  background-color: #2ebd59;
+  height: 50px;
+  font-size: 20px;
+  border: none;
+  border-radius: 25px;
+  padding: 0 20px;
+  text-transform: uppercase;
+  font-weight: 700;
+  letter-spacing: 1px;
+  transition: all 0.5s;
+  cursor: pointer;
+}
+
+#spotify-connect:hover
+{
+  background-color: #27d34d;
+}
+
+@media handheld, only screen and (max-width: 799px)
+{
+  #cont
+  {
+    width: 100%;
+    max-width: auto;
+  }
+}
