@@ -3,4 +3,6 @@ Rails.application.routes.draw do
   root 'playlist_generator#index'
 
   post 'playlist/create', :to => 'playlist_generator#create'
+
+  get '/auth/spotify/callback', to: 'playlist_generator#spotify'
 end

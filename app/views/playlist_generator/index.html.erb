@@ -1,19 +1,14 @@
 <div id="cont">
-  <div class="left">
-    <h1>
-      2017 In Concerts
-    </h1>
-    <p>
-      Remember all those awesome bands you saw in 2017?
-    </p>
-    <p>
-      Relive them all with a personalised Spotify playlist.
-    </p>
-  </div>
-  <div class="right">
-    IMAGE
-  </div>
-  <div class="form-cont">
+  <h1>
+    2017 In Concerts
+  </h1>
+  <p>
+    Remember all those awesome bands you saw in 2017?
+  </p>
+  <p>
+    Relive them all with a personalised Spotify playlist.
+  </p>
+  <div id="form-cont">
     <img src="/assets/powered-by-songkick-pink.svg" alt="Powered by Songkick" id="powered-by-sk"/>
     <form action="/playlist/create" method="post" id="user-form">
       <input type="text" id="username" name="username" value="Your Songkick username" class="empty" />
@@ -22,13 +17,17 @@
       <input type="submit" id="go" value="Let’s go" />
     </form>
 
-    <button id="spotify-connect">
+    <a id="spotify-connect" href="/auth/spotify">
       Connect to Spotify
-    </button>
+    </a>
   </div>
 
   <div id="response">
 
   </div>
+
+  Photo by <a href="https://burst.shopify.com/@ndekhors">Nicole De Khors</a>
+
+
 
 </div>
