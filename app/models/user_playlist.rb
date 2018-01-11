@@ -4,30 +4,30 @@ class UserPlaylist
 
   PLAYLIST_NAME = '2017 In Concerts'
 
-  attr_reader :errors
+  attr_reader :errors, :generated_playlist
 
-  def initialize(username)
-    @username = username
+  def initialize(sk_username, spotify_auth)
+    @sk_username = sk_username
+    @spotify_auth = spotify_auth
     @errors = []
   end
 
   def build!
-    if @username.blank?
+    if @sk_username.blank?
       @errors << "Please enter a username"
+      return
+    elsif @spotify_auth.blank?
+      @errors << "Please connect to Spotify first"
       return
     end
 
-    spotify = ::Services::SpotifyApi.new
+    spotify = ::Services::SpotifyApi.new(@spotify_auth)
 
     spotify_artists = get_spotify_artists(spotify)
     playlist_tracks = get_top_tracks(spotify_artists, spotify)
 
-    # p playlist_tracks.first
-    # playlist_tracks.each { |playlist| }
     # Create user playlist
-    playlist_tracks.flatten.each { |pt| p pt.uri }
-    build_playlist(playlist_tracks, spotify)
-
+    @generated_playlist = build_playlist(playlist_tracks, spotify)
   rescue NoEventsError => e
     @errors << "Looks like you haven't marked your attendance on any Songkick events"
   rescue NoEventsInPastYearError => e
@@ -84,7 +84,7 @@ class UserPlaylist
   end
 
   def user_concerts
-    events = ::Services::SongkickApi.gigography(@username, Date.strptime('2017-01-01', '%Y-%m-%d'))
+    events = ::Services::SongkickApi.gigography(@sk_username, Date.strptime('2017-01-01', '%Y-%m-%d'))
     # Only concerts
     events.reject { |event| event.festival? }
   end

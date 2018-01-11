@@ -27,17 +27,20 @@ var PlaylistGenerator = {
   usernameFocus: function(e) {
     if (!this.usernameChanged) {
       $('#username').removeClass('empty');
+      $('#username').val('');
     }
   },
 
   usernameBlur: function(e) {
     if (!this.usernameChanged) {
       $('#username').addClass('empty');
+      $('#username').val(this.usernameStartText);
     }
   },
 
   usernameChange: function(e) {
-    this.usernameChange = this.usernameStartText == $.trim($('#username').val());
+    var username = $.trim($('#username').val());
+    this.usernameChanged = username != this.usernameStartText && username.length > 0;
     this.usernameBlur(e);
   },
 

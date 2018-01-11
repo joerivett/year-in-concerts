@@ -1,20 +1,32 @@
 require 'services/songkick_api'
 require 'services/spotify_api'
+require 'base64'
+require 'json'
 
 class PlaylistGeneratorController < ApplicationController
   def index
-    p request.env['omniauth.auth']
-    # UserPlaylist.new('rivett').build!
+    # if cookies[:spotify_auth].present?
+    #   spotify_auth = JSON.parse(Base64.decode64(cookies[:spotify_auth]))
+    #
+    #   p :spotify_auth
+    #   p spotify_auth
+    #
+    #   spotify_user = RSpotify::User.new(spotify_auth)
+    #   p spotify_user
+    # end
+
+    @page = ViewModels::Index.new(cookies[:spotify_auth])
+
+    render :index
   end
 
   def create
-    p request.env['omniauth.auth']
+    spotify_auth = cookies[:spotify_auth]
+    sk_username = params[:username]
+    playlist = UserPlaylist.new(sk_username, spotify_auth)
+    playlist.build!
 
-    # sk_username = params[:username]
-    # playlist = UserPlaylist.new(sk_username)
-    # playlist.build!
-    #
-    # playlist_view = ViewModels::Playlist.new(playlist)
+    playlist_view = ViewModels::Playlist.new(playlist)
 
     render :partial => 'playlist', :object => playlist_view
   end
@@ -24,16 +36,14 @@ class PlaylistGeneratorController < ApplicationController
 
     auth = request.env['omniauth.auth']
 
+        p auth
     persist_hash = {}
     persist_hash['credentials'] = auth['credentials'].to_hash
+    persist_hash['info'] = auth['info']
     persist_hash['id'] = auth['uid']
 
-    p persist_hash
 
-    final_hash = persist_hash
-    spotify_user3 = RSpotify::User.new(final_hash)
-    p spotify_user3
-    p spotify_user3.create_playlist!('Joe test2')
+    cookies[:spotify_auth] = Base64.encode64(persist_hash.to_json)
 
     redirect_to :root
   end
