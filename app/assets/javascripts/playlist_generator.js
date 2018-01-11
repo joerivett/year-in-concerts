@@ -46,6 +46,7 @@ var PlaylistGenerator = {
 
   playlistLoaded: function(e) {
     $('#response').html(e.responseText);
+    $('#user-form').hide();
   }
 };
 

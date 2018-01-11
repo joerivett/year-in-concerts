@@ -1,9 +1,9 @@
 <% unless playlist.errors? %>
   <b>
-  Here's your playlist!
+    And here it is, your <i>2017 In Concerts</i> playlist:
+  </b>
   <br />
   <iframe src="<%= playlist.link %>" width="300" height="380" frameborder="0" allowtransparency="true"></iframe>
-  </b>
 <% else %>
   <p id="error">
     <%= playlist.error_content %>

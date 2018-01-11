@@ -10,32 +10,34 @@
   </p>
   <div id="form-cont">
     <% if @page.step_1? %>
-
-    <hr />
-    First, connect to your Spotify account:
-    <br />
-    <a id="spotify-connect" href="/auth/spotify">
-      Connect to Spotify
-    </a>
-    <br />
-    <hr />
-
+      <hr />
+      <div id="connect-to-spotify">
+        First, connect to your Spotify account:
+        <br />
+        <a id="spotify-connect" href="/auth/spotify">
+          Connect to Spotify
+        </a>
+        <br />
+      </div>
+      <hr />
     <% else %>
 
     <hr />
-    Welcome <%= @page.spotify_username %>!
-    <br />
-    <img src="<%= @page.spotify_image %>" alt="<%= @page.spotify_username %>" />
-    <br />
-    Next, tell us your Songkick username:
-    <br />
-    <br />
-    <form action="/playlist/create" method="post" id="user-form">
-      <input type="text" id="username" name="username" value="Your Songkick username" class="empty" />
-      <input type="hidden" id="spotify_auth" name="spotify_auth" />
+    <div id="connect-to-songkick">
+      Welcome <%= @page.spotify_username %>!
+      <br />
+      <img src="<%= @page.spotify_image %>" alt="<%= @page.spotify_username %>" />
+      <br />
+      Next, tell us your Songkick username:
+      <br />
+      <br />
+      <form action="/playlist/create" method="post" id="user-form">
+        <input type="text" id="username" name="username" value="Your Songkick username" class="empty" />
+        <input type="hidden" id="spotify_auth" name="spotify_auth" />
 
-      <input type="submit" id="go" value="Let’s go" />
-    </form>
+        <input type="submit" id="go" value="Let’s go" />
+      </form>
+    </div>
     <hr />
     <% end %>
   </div>
