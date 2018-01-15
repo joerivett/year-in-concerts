@@ -24,13 +24,15 @@
 
     <hr />
     <div id="connect-to-songkick">
-      Welcome <%= @page.spotify_username %>!
-      <br />
-      <img src="<%= @page.spotify_image %>" alt="<%= @page.spotify_username %>" />
-      <br />
-      Next, tell us your Songkick username:
-      <br />
-      <br />
+      <div id="spotify-info">
+        Welcome <%= @page.spotify_username %>!
+        <% if @page.has_spotify_image? %>
+          <img src="<%= @page.spotify_image %>" alt="<%= @page.spotify_username %>" />
+        <% end %>
+      </div>
+      <p>
+        Next, tell us your Songkick username:
+      </p>
       <form action="/playlist/create" method="post" id="user-form">
         <input type="text" id="username" name="username" value="Your Songkick username" class="empty" />
         <input type="hidden" id="spotify_auth" name="spotify_auth" />
@@ -46,9 +48,8 @@
 
   </div>
   <img src="/assets/powered-by-songkick-pink.svg" alt="Powered by Songkick" id="powered-by-sk"/>
-  <br />
-  Photo by <a href="https://burst.shopify.com/@ndekhors">Nicole De Khors</a>
-
-
+  <p id="attribution">
+    Photo by <a href="https://burst.shopify.com/@ndekhors">Nicole De Khors</a>
+  </p>
 
 </div>

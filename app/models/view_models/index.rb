@@ -14,9 +14,16 @@ module ViewModels
       @spotify_auth['id']
     end
 
+    def has_spotify_image?
+      spotify_image.length > 0
+    end
+
     def spotify_image
-      return '' unless @spotify_auth.present?
-      @spotify_auth['info']['images'].first['url']
+      @spotify_image ||= begin
+        return '' unless @spotify_auth.present?
+        return '' unless @spotify_auth['info']['images'].present? && @spotify_auth['info']['images'].any?
+        @spotify_auth['info']['images'].first['url']
+      end
     end
 
   private
