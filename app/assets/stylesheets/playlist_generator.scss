@@ -10,6 +10,17 @@ body
   font-size: 1.5em;
 }
 
+h1
+{
+  color: #F50F4A;
+  margin: 30px 0 15px 0;
+}
+
+p
+{
+  margin: 0;
+}
+
 #cont
 {
   text-align: center;
@@ -20,21 +31,32 @@ body
   background-color: rgba(0, 0, 0, 0.5);
 }
 
-#form-cont
+#response
 {
-  clear: both;
+  display: none;
 }
 
-#powered-by-sk
+#connect-to-spotify, #connect-to-songkick, #response
 {
-  width: 100px;
-  float: right;
+  margin: 20px 0;
+  padding: 20px 0;
+  border-top: 2px solid #333333;
+}
+
+#connect-to-songkick p
+{
+  margin: 10px 0 10px 0;
+}
+
+#user-form
+{
+  margin-top: 20px;
 }
 
 #user-form input
 {
   color: white;
-  font-size: 25px;
+  font-size: 1em;
   box-sizing: border-box;
   letter-spacing: 0.5px;
 }
@@ -48,6 +70,7 @@ body
   padding: 7px;
   border-top-left-radius: 3px;
   border-bottom-left-radius: 3px;
+  font-family: 'PT Sans', sans-serif;
 }
 
 #username.empty
@@ -67,6 +90,13 @@ body
   border-top-right-radius: 3px;
   border-bottom-right-radius: 3px;
   text-transform: uppercase;
+  font-family: 'PT Sans', sans-serif;
+}
+
+#go.disabled
+{
+  cursor: default;
+  background-color: #444444;
 }
 
 #go:hover
@@ -74,7 +104,12 @@ body
   background-color: #ef4570;
 }
 
-#spotify-connect
+#go.disabled:hover
+{
+  background-color: #444444;
+}
+
+#spotify-connect-btn
 {
   color: #fff;
   background-color: #2ebd59;
@@ -94,14 +129,20 @@ body
   margin: 20px 0;
 }
 
-#spotify-connect:hover
+#spotify-connect-btn:hover
 {
   background-color: #27d34d;
 }
 
+.error
+{
+  color: #F50F4A;
+  margin: 0;
+}
+
 #spotify-info
 {
-  margin: 20px 0;
+  margin-bottom: 30px;
 }
 
 #spotify-info img
@@ -112,18 +153,126 @@ body
   margin: auto;
 }
 
+#loading
+{
+
+  width: 400px;
+  margin: auto;
+}
+
+#animation-containter
+{
+  position: relative;
+}
+
+#loading p
+{
+  padding-top: 100px;
+}
+
+#loading img
+{
+  position: absolute;
+  width: 80px;
+  animation-duration: 4s;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+
+.animated_sk
+{
+  animation-name: working_songkick;
+}
+
+.animated_spotify
+{
+  animation-name: working_spotify;
+}
+
+#loading_songkick
+{
+  left: 0;
+  border-radius: 36px;
+}
+
+#loading_spotify
+{
+  right: 0;
+}
+
+@keyframes working_songkick {
+  0%   {left:0px; top:0px; background-color: transparent;}
+  /*50% {left:160px; top:0px;transform: rotate(360deg); background-color: transparent;}*/
+  100% {left:160px; top:0px;transform: rotate(360deg); background-color: white;}
+}
+
+@keyframes working_spotify {
+  0%   {right:0px; top:0px;}
+  /*50% {right:160px; top:0px;transform: rotate(-360deg);}*/
+  100% {right:160px; top:0px;transform: rotate(-360deg);}
+}
+
+#footer
+{
+  text-align: right;
+  margin-top: 40px;
+}
+
+#powered-by-sk
+{
+  width: 100px;
+}
+
 #attribution
 {
   font-size: 15px;
-  text-align: right;
+  margin: 10px 0;
 }
 
 @media handheld, only screen and (max-width: 799px)
 {
+  body
+  {
+    font-size: 1.3em;
+    padding: 10px;
+  }
+
   #cont
   {
     width: 100%;
     max-width: auto;
+    padding: 0;
+  }
+}
+
+@media handheld, only screen and (max-width: 499px)
+{
+  body
+  {
+    font-size: 1.3em;
+    padding: 10px;
+  }
+
+  #cont
+  {
+    width: 100%;
+    max-width: auto;
+    padding: 0;
+  }
+
+  #username
+  {
+    display: block;
+    width: 90%;
+    margin: auto;
+    border: 2px solid #444444;
+  }
+
+  #go
+  {
+    display: block;
+    margin: 5px auto;
+    width: 90%;
   }
 }
 

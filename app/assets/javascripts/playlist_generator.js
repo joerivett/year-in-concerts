@@ -11,17 +11,34 @@ var PlaylistGenerator = {
   },
 
   formSubmit: function(e) {
+    this.showLoadingAnimation();
     e.stopPropagation();
     e.preventDefault();
     var form = $(e.currentTarget);
-    $.ajax({
-      url: form.attr('action'),
-      method: 'post',
-      data: {
-        username: form.find('#username').val()
-      },
-      complete: this.playlistLoaded.bind(this)
-    });
+    $('.error').hide();
+    var val = form.find('#username').val();
+    console.log(val);
+    if (val.length == 0 || val == this.usernameStartText) {
+      $('.error').text('Please enter your Songkick username');
+      $('.error').show();
+    }
+    else {
+      this.showLoadingAnimation();
+      $.ajax({
+        url: form.attr('action'),
+        method: 'post',
+        data: {
+          username: val
+        },
+        complete: this.playlistLoaded.bind(this)
+      });
+    }
+  },
+
+  showLoadingAnimation: function() {
+    $('#loading').show();
+    $('#loading_songkick').addClass('animated_sk');
+    $('#loading_spotify').addClass('animated_spotify');
   },
 
   usernameFocus: function(e) {
@@ -46,7 +63,10 @@ var PlaylistGenerator = {
 
   playlistLoaded: function(e) {
     $('#response').html(e.responseText);
+    $('#response').show();
     $('#user-form').hide();
+    $('#connect-to-songkick').hide();
+    $('#loading').hide();
   }
 };
 

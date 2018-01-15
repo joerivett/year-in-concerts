@@ -8,48 +8,62 @@
   <p>
     Relive them all with a personalised Spotify playlist.
   </p>
-  <div id="form-cont">
+  <div>
     <% if @page.step_1? %>
-      <hr />
       <div id="connect-to-spotify">
-        First, connect to your Spotify account:
-        <br />
-        <a id="spotify-connect" href="/auth/spotify">
+        <p>
+          First, connect to your Spotify account.
+        </p>
+        <a id="spotify-connect-btn" href="/auth/spotify">
           Connect to Spotify
         </a>
         <br />
       </div>
-      <hr />
     <% else %>
+      <div id="connect-to-songkick">
+        <div id="spotify-info">
+          Welcome <%= @page.spotify_username %>!
+          <% if @page.has_spotify_image? %>
+            <img src="<%= @page.spotify_image %>" alt="<%= @page.spotify_username %>" />
+          <% end %>
+        </div>
+        <form action="/playlist/create" method="post" id="user-form">
+          <input type="text" id="username" name="username" value="Your Songkick username" class="empty" />
+          <input type="hidden" id="spotify_auth" name="spotify_auth" />
 
-    <hr />
-    <div id="connect-to-songkick">
-      <div id="spotify-info">
-        Welcome <%= @page.spotify_username %>!
-        <% if @page.has_spotify_image? %>
-          <img src="<%= @page.spotify_image %>" alt="<%= @page.spotify_username %>" />
-        <% end %>
+          <input type="submit" id="go" value="Let’s go" />
+        </form>
+
+        <p class="error">
+
+        </p>
       </div>
-      <p>
-        Next, tell us your Songkick username:
-      </p>
-      <form action="/playlist/create" method="post" id="user-form">
-        <input type="text" id="username" name="username" value="Your Songkick username" class="empty" />
-        <input type="hidden" id="spotify_auth" name="spotify_auth" />
-
-        <input type="submit" id="go" value="Let’s go" />
-      </form>
-    </div>
-    <hr />
     <% end %>
+  </div>
+
+  <div id="loading">
+    <div id="animation-containter">
+      <img src="/assets/Spotify-logo.svg" alt="Spotify" id="loading_spotify" />
+      <img src="/assets/sk-badge-pink.svg" alt="Songkick" id="loading_songkick" />
+    </div>
+    <p>
+      Bringing the noise.
+    </p>
   </div>
 
   <div id="response">
 
   </div>
-  <img src="/assets/powered-by-songkick-pink.svg" alt="Powered by Songkick" id="powered-by-sk"/>
-  <p id="attribution">
-    Photo by <a href="https://burst.shopify.com/@ndekhors">Nicole De Khors</a>
-  </p>
+
+  <div id="footer">
+    <a href="https://www.songkick.com" target="_blank">
+      <img src="/assets/powered-by-songkick-pink.svg" alt="Powered by Songkick" id="powered-by-sk"/>
+    </a>
+    <p id="attribution">
+      Built by <a href="https://www.songkick.com/users/rivett" target="_blank">rivett</a>
+      <br />
+      Photo by <a href="https://burst.shopify.com/@ndekhors">Nicole De Khors</a>
+    </p>
+  </div>
 
 </div>
