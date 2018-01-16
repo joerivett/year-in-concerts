@@ -20,7 +20,7 @@ module Services
           events += results['event'].map do |event_hash|
             Event.new(event_hash)
           end
-          max_events = results['totalEntries']
+          max_events = response.data['resultsPage']['totalEntries'].to_i
 
           break unless get_next_page?(events, max_events, time_limit)
           page += 1
@@ -49,8 +49,8 @@ module Services
         return false if events.length == max_events
         # Keep going as no time limitation
         return true unless time_limit.present?
-        # If oldest event in this batch is before the date limit, return false
-        return events.last.date < time_limit
+        # If oldest event in this batch is before the date limit, return true
+        return events.last.date > time_limit
       end
     end
   end
