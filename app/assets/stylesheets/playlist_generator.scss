@@ -155,7 +155,7 @@ p
 
 #loading
 {
-
+  display: none;
   width: 400px;
   margin: auto;
 }
@@ -192,7 +192,7 @@ p
 #loading_songkick
 {
   left: 0;
-  border-radius: 36px;
+  border-radius: 37px;
 }
 
 #loading_spotify
@@ -203,13 +203,13 @@ p
 @keyframes working_songkick {
   0%   {left:0px; top:0px; background-color: transparent;}
   /*50% {left:160px; top:0px;transform: rotate(360deg); background-color: transparent;}*/
-  100% {left:160px; top:0px;transform: rotate(360deg); background-color: white;}
+  100% {left:160px; top:0px; transform: rotate(360deg); background-color: white;}
 }
 
 @keyframes working_spotify {
   0%   {right:0px; top:0px;}
   /*50% {right:160px; top:0px;transform: rotate(-360deg);}*/
-  100% {right:160px; top:0px;transform: rotate(-360deg);}
+  100% {right:160px; top:0px; transform: rotate(-360deg);}
 }
 
 #footer

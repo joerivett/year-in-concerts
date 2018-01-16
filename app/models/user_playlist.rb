@@ -14,7 +14,7 @@ class UserPlaylist
 
   def build!
     if @sk_username.blank?
-      @errors << "Please enter a username"
+      @errors << "Please enter your Songkick username"
       return
     elsif @spotify_auth.blank?
       @errors << "Please connect to Spotify first"

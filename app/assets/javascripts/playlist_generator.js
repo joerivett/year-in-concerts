@@ -11,26 +11,28 @@ var PlaylistGenerator = {
   },
 
   formSubmit: function(e) {
-    this.showLoadingAnimation();
     e.stopPropagation();
     e.preventDefault();
-    var form = $(e.currentTarget);
     $('.error').hide();
+
+    var form = $(e.currentTarget);
     var val = form.find('#username').val();
-    console.log(val);
+
     if (val.length == 0 || val == this.usernameStartText) {
       $('.error').text('Please enter your Songkick username');
       $('.error').show();
     }
     else {
       this.showLoadingAnimation();
+      $('#user-form').hide();
       $.ajax({
         url: form.attr('action'),
         method: 'post',
         data: {
           username: val
         },
-        complete: this.playlistLoaded.bind(this)
+        complete: this.playlistLoaded.bind(this),
+        error: this.playlistError.bind(this)
       });
     }
   },
@@ -66,6 +68,13 @@ var PlaylistGenerator = {
     $('#response').show();
     $('#user-form').hide();
     $('#connect-to-songkick').hide();
+    $('#loading').hide();
+  },
+
+  playlistError: function(e) {
+    $('#response').html(e.responseText);
+    $('#response').show();
+    $('#user-form').show();
     $('#loading').hide();
   }
 };
