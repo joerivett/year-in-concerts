@@ -5,17 +5,7 @@ require 'json'
 
 class PlaylistGeneratorController < ApplicationController
   def index
-    # if cookies[:spotify_auth].present?
-    #   spotify_auth = JSON.parse(Base64.decode64(cookies[:spotify_auth]))
-    #
-    #   p :spotify_auth
-    #   p spotify_auth
-    #
-    #   spotify_user = RSpotify::User.new(spotify_auth)
-    #   p spotify_user
-    # end
-
-    @page = ViewModels::Index.new(cookies[:spotify_auth])
+    @page = ViewModels::Index.new(cookies[:spotify_auth], params)
 
     render :index
   end
@@ -28,7 +18,8 @@ class PlaylistGeneratorController < ApplicationController
 
     playlist_view = ViewModels::Playlist.new(playlist)
 
-    render :partial => 'playlist', :object => playlist_view
+    status = playlist_view.errors? ? 417 : 200
+    render :partial => 'playlist', :object => playlist_view, :status => status
   end
 
   def spotify
@@ -36,15 +27,17 @@ class PlaylistGeneratorController < ApplicationController
 
     auth = request.env['omniauth.auth']
 
-        p auth
     persist_hash = {}
     persist_hash['credentials'] = auth['credentials'].to_hash
     persist_hash['info'] = auth['info']
     persist_hash['id'] = auth['uid']
 
-
     cookies[:spotify_auth] = Base64.encode64(persist_hash.to_json)
 
     redirect_to :root
+  end
+
+  def omniauth_failure
+    redirect_to "#{root_path}?error=spotify_access_denied"
   end
 end

@@ -33,8 +33,8 @@ module Services
           url = endpoint << "&apikey=#{API_KEY}"
           http.get(url)
         rescue Songkick::Transport::HttpError => e
-          error = e.data['resultsPage']['error']
-          raise APIError(error)
+          error = e.data['resultsPage']['error'].to_json
+          raise APIError.new(error)
         end
       end
 

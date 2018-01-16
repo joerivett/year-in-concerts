@@ -8,38 +8,38 @@
   <p>
     Relive them all with a personalised Spotify playlist.
   </p>
-  <div>
-    <% if @page.step_1? %>
-      <div id="connect-to-spotify">
-        <p>
-          First, connect to your Spotify account.
-        </p>
-        <a id="spotify-connect-btn" href="/auth/spotify">
-          Connect to Spotify
-        </a>
-        <br />
+
+  <% if @page.step_1? %>
+    <div id="connect-to-spotify">
+      <p>
+        First, connect to your Spotify account.
+      </p>
+      <a id="spotify-connect-btn" href="/auth/spotify">
+        Connect to Spotify
+      </a>
+      <br />
+    </div>
+  <% else %>
+    <div id="connect-to-songkick">
+      <div id="spotify-info">
+        Welcome <%= @page.spotify_username %>!
+        <% if @page.has_spotify_image? %>
+          <img src="<%= @page.spotify_image %>" alt="<%= @page.spotify_username %>" />
+        <% end %>
       </div>
-    <% else %>
-      <div id="connect-to-songkick">
-        <div id="spotify-info">
-          Welcome <%= @page.spotify_username %>!
-          <% if @page.has_spotify_image? %>
-            <img src="<%= @page.spotify_image %>" alt="<%= @page.spotify_username %>" />
-          <% end %>
-        </div>
-        <form action="/playlist/create" method="post" id="user-form">
-          <input type="text" id="username" name="username" value="Your Songkick username" class="empty" />
-          <input type="hidden" id="spotify_auth" name="spotify_auth" />
+      <form action="/playlist/create" method="post" id="user-form">
+        <input type="text" id="username" name="username" value="Your Songkick username" class="empty" />
+        <input type="hidden" id="spotify_auth" name="spotify_auth" />
 
-          <input type="submit" id="go" value="Let’s go" />
-        </form>
+        <input type="submit" id="go" value="Let’s go" />
+      </form>
+    </div>
+  <% end %>
 
-        <p class="error">
+  <p class="error">
+    <%= @page.existing_errors %>
+  </p>
 
-        </p>
-      </div>
-    <% end %>
-  </div>
 
   <div id="loading">
     <div id="animation-containter">

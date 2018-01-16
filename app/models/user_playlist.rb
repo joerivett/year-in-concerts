@@ -28,10 +28,20 @@ class UserPlaylist
 
     # Create user playlist
     @generated_playlist = build_playlist(playlist_tracks, spotify)
+  rescue Services::SongkickApi::APIError => e
+    message = JSON.parse(e.message)['message']
+    case message
+    when 'Resource not found'
+      @errors << "There was an getting your Songkick concert history. Is your username correct?"
+    else
+      @errors << "There was an getting your Songkick concert history. Please try again later"
+    end
   rescue NoEventsError => e
-    @errors << "Looks like you haven't marked your attendance on any Songkick events"
+    @errors << "Looks like you haven't marked your attendance on any Songkick concerts"
   rescue NoEventsInPastYearError => e
-    @errors << "Looks like you haven't been to any events in the past year"
+    @errors << "Looks like you didn't mark your attendance on any Songkick concerts in 2017"
+  rescue => e
+    @errors << "Something has gone terribly wrong but I don't know how to deal with it. Maybe try again?"
   end
 
   private
