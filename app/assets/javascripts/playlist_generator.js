@@ -31,7 +31,7 @@ var PlaylistGenerator = {
         data: {
           username: val
         },
-        complete: this.playlistLoaded.bind(this),
+        success: this.playlistLoaded.bind(this),
         error: this.playlistError.bind(this)
       });
     }
@@ -74,6 +74,7 @@ var PlaylistGenerator = {
   playlistError: function(e) {
     $('#response').html(e.responseText);
     $('#response').show();
+    $('#connect-to-songkick').show();
     $('#user-form').show();
     $('#loading').hide();
   }
