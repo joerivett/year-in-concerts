@@ -34,6 +34,8 @@ var PlaylistGenerator = {
         success: this.playlistLoaded.bind(this),
         error: this.playlistError.bind(this)
       });
+
+      this.sendEvent({'eventCategory': 'click', 'eventAction': 'lets_go'});
     }
   },
 
@@ -69,6 +71,8 @@ var PlaylistGenerator = {
     $('#user-form').hide();
     $('#connect-to-songkick').hide();
     $('#loading').hide();
+
+    this.sendEvent({'eventCategory': 'playlist_generate', 'eventAction': 'success'});
   },
 
   playlistError: function(e) {
@@ -77,6 +81,18 @@ var PlaylistGenerator = {
     $('#connect-to-songkick').show();
     $('#user-form').show();
     $('#loading').hide();
+
+    this.sendEvent({'eventCategory': 'playlist_generate', 'eventAction': 'error', 'eventLabel': $.trim($('#response').text())});
+  },
+
+  sendEvent: function(fields) {
+    if (typeof fields === "undefined") return;
+    fields['hitType'] = 'event';
+    ga('send', {
+      eventCategory: fields['eventCategory'],
+      eventAction: fields['eventAction'],
+      eventLabel: fields['eventLabel']
+    });
   }
 };
 
