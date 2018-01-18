@@ -231,6 +231,17 @@ p
   margin: 10px 0;
 }
 
+#result
+{
+  display: none;
+}
+
+#result iframe
+{
+  max-width: 100%;
+  margin-top: 20px;
+}
+
 @media handheld, only screen and (max-width: 799px)
 {
   body
@@ -242,7 +253,7 @@ p
   #cont
   {
     width: 100%;
-    max-width: auto;
+    max-width: none;
     padding: 0;
   }
 }
