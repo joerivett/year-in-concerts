@@ -76,7 +76,7 @@ var PlaylistGenerator = {
     $('#connect-to-songkick').hide();
     $('#loading').hide();
 
-    this.sendEvent({'eventCategory': 'playlist_generate', 'eventAction': 'success'});
+    this.sendEvent({'eventCategory': 'playlist_generate', 'eventAction': 'success', 'eventLabel': 'size', 'eventValue': $.trim($('#stats').text())});
   },
 
   playlistError: function(e) {
@@ -98,7 +98,8 @@ var PlaylistGenerator = {
     ga('send', 'event', {
       eventCategory: fields['eventCategory'],
       eventAction: fields['eventAction'],
-      eventLabel: fields['eventLabel']
+      eventLabel: fields['eventLabel'],
+      eventValue: fields['eventValue']
     });
   }
 };

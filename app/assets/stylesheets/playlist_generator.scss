@@ -179,6 +179,7 @@ p
   animation-duration: 4s;
   animation-iteration-count: infinite;
   animation-direction: alternate;
+  animation-timing-function: ease-in-out;
 }
 
 .animated_sk
@@ -231,15 +232,15 @@ p
   margin: 10px 0;
 }
 
-#result
-{
-  display: none;
-}
-
-#result iframe
+#response iframe
 {
   max-width: 100%;
   margin-top: 20px;
+}
+
+#stats
+{
+  display: none;
 }
 
 @media handheld, only screen and (max-width: 799px)

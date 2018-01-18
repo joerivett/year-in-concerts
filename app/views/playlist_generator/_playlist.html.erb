@@ -3,6 +3,9 @@
     Your <i>2017 In Concerts</i> playlist:
   </p>
   <iframe src="<%= playlist.link %>" width="500" height="380" frameborder="0" allowtransparency="true"></iframe>
+  <span id="stats">
+    <%= playlist.playlist_size %>
+  </span>
 <% else %>
   <p class="error">
     <%= playlist.error_content %>

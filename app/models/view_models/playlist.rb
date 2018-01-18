@@ -10,6 +10,10 @@ module ViewModels
       end
     end
 
+    def playlist_size
+      @playlist.generated_playlist.total
+    end
+
     def errors?
       @playlist.errors.any?
     end
