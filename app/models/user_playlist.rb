@@ -24,8 +24,6 @@ class UserPlaylist
     max_tries = 3
 
     begin
-
-      raise RestClient::BadGateway.new
       spotify = ::Services::SpotifyApi.new(@spotify_auth)
 
       spotify_artists = get_spotify_artists(spotify)
