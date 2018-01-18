@@ -65,10 +65,9 @@ var PlaylistGenerator = {
     this.usernameBlur(e);
   },
 
-  playlistLoaded: function(e) {
-    $('#response').html(e.responseText);
+  playlistLoaded: function(responseText) {
+    $('#response').html(responseText);
     $('#response').show();
-    $('#user-form').hide();
     $('#connect-to-songkick').hide();
     $('#loading').hide();
 
