@@ -86,8 +86,7 @@ var PlaylistGenerator = {
 
   sendEvent: function(fields) {
     if (typeof fields === "undefined") return;
-    fields['hitType'] = 'event';
-    ga('send', {
+    ga('send', 'event', {
       eventCategory: fields['eventCategory'],
       eventAction: fields['eventAction'],
       eventLabel: fields['eventLabel']
