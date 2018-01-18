@@ -8,6 +8,11 @@ var PlaylistGenerator = {
     $('#username').on('focus', this.usernameFocus.bind(this));
     $('#username').on('blur', this.usernameBlur.bind(this));
     $('#username').on('change', this.usernameChange.bind(this));
+    $('#spotify-connect-btn').on('click', this.spotifyButtonClick.bind(this));
+
+    if ($('#spotify-info').length) {
+      this.sendEvent({'eventCategory': 'spotify', 'eventAction': 'connect', 'eventLabel': 'success'});
+    }
   },
 
   formSubmit: function(e) {
@@ -82,6 +87,10 @@ var PlaylistGenerator = {
     $('#loading').hide();
 
     this.sendEvent({'eventCategory': 'playlist_generate', 'eventAction': 'error', 'eventLabel': $.trim($('#response').text())});
+  },
+
+  spotifyButtonClick: function(e) {
+    this.sendEvent({'eventCategory': 'click', 'eventAction': 'connect_to_spotify'});
   },
 
   sendEvent: function(fields) {
