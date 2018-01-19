@@ -1,8 +1,14 @@
 <% unless playlist.errors? %>
-  <p>
-    Your <i>2017 In Concerts</i> playlist:
-  </p>
-  <iframe src="<%= playlist.link %>" width="500" height="380" frameborder="0" allowtransparency="true"></iframe>
+  <% if playlist.playlist_size == 0 %>
+    <p>
+      Looks like I couldn't find any songs to add to your 2017 In Concerts playlist. Sorry I've let the team down.
+    </p>
+  <% else %>
+    <p>
+      Your <i>2017 In Concerts</i> playlist:
+    </p>
+    <iframe src="<%= playlist.link %>" width="500" height="380" frameborder="0" allowtransparency="true"></iframe>
+  <% end %>
   <span id="stats">
     <%= playlist.playlist_size %>
   </span>
