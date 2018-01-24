@@ -11,8 +11,14 @@ module Services
 
     def get_artist(name, country=:GB)
       # TODO: country?
-      artists = RSpotify::Artist.search(name, limit: 1, offset: 0, market: country)
-      artists.first
+      artists = RSpotify::Artist.search(name, limit: 10, offset: 0, market: country)
+      # Account for partial matches in search results by looking for an exact match
+      artist = artists.detect { |artist| artist.name == name }
+
+      # If still no match, try making case insensitive
+      artist = artists.detect { |artist| artist.name.downcase == name.downcase } if artist.nil?
+
+      artist
     end
 
     def top_tracks(artist, country=:GB, max=3)
