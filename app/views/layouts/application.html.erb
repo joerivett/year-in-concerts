@@ -3,6 +3,11 @@
   <head>
     <title>2017 In Concerts</title>
     <%= csrf_meta_tags %>
+    <meta name="description" content="Remember all those awesome concerts you went to in 2017? Relive them with a personalised Spotify playlist."/>
+    <meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, width=device-width" />
+
+    <meta property="og:url" content="https://songkick-year-in-concerts.herokuapp.com/" />
+    <meta property="og:type" content="website" />
 
     <script
       src="https://code.jquery.com/jquery-3.2.1.min.js"
@@ -11,8 +16,6 @@
 
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
-
-    <meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, width=device-width" />
 
     <link href="https://fonts.googleapis.com/css?family=PT+Sans|Rock+Salt" rel="stylesheet" />
 
