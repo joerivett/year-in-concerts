@@ -20,7 +20,17 @@ module ViewModels
 
     def spotify_username
       return '' unless @spotify_auth.present?
-      @spotify_auth['id']
+      @spotify_username ||= begin
+        username = @spotify_auth['id']
+
+        # Sometimes ID is an integer, sometimes it's the username
+        # If integer, return full name
+        unless (username.to_s =~ /^[0-9]+$/).nil?
+          username = @spotify_auth['info']['display_name'] rescue ''
+        end
+
+        username
+      end
     end
 
     def has_spotify_image?
