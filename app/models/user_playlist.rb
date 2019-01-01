@@ -2,7 +2,7 @@ class UserPlaylist
   class NoEventsError < StandardError; end
   class NoEventsInPastYearError < StandardError; end
 
-  PLAYLIST_NAME = '2017 In Concerts'
+  PLAYLIST_NAME = '2018 In Concerts'
 
   attr_reader :errors, :generated_playlist
 
@@ -42,7 +42,7 @@ class UserPlaylist
     rescue NoEventsError => e
       @errors << "Looks like you haven't marked your attendance on any Songkick concerts"
     rescue NoEventsInPastYearError => e
-      @errors << "Looks like you didn't mark your attendance on any Songkick concerts in 2017"
+      @errors << "Looks like you didn't mark your attendance on any Songkick concerts in 2018"
     rescue RestClient::BadGateway, RestClient::ServerBrokeConnection => e
       max_tries -= 1
       if max_tries > 0
@@ -105,9 +105,9 @@ class UserPlaylist
       events = user_concerts
       raise NoEventsError unless events.length > 0
 
-      # Only get concerts in 2017
+      # Only get concerts in 2018
       events.select! do |event|
-        event.date.year == 2017
+        event.date.year == 2018
       end
       raise NoEventsInPastYearError unless events.length > 0
       events
@@ -116,7 +116,7 @@ class UserPlaylist
 
   def user_concerts
     @user_concerts ||= begin
-      events = ::Services::SongkickApi.gigography(@sk_username, Date.strptime('2017-01-01', '%Y-%m-%d'))
+      events = ::Services::SongkickApi.gigography(@sk_username, Date.strptime('2018-01-01', '%Y-%m-%d'))
       # Only concerts
       events.reject { |event| event.festival? }
     end
