@@ -13,7 +13,8 @@ class PlaylistGeneratorController < ApplicationController
   def create
     spotify_auth = cookies[:spotify_auth]
     sk_username = params[:username]
-    playlist = UserPlaylist.new(sk_username, spotify_auth)
+    user = User.new(sk_username)
+    playlist = UserPlaylist.new(user, spotify_auth)
     playlist.build!
 
     playlist_view = ViewModels::Playlist.new(playlist)
