@@ -35,5 +35,9 @@ module ViewModels
     def festival_count
       @playlist.user.festival_count
     end
+
+    def artist_grid
+      ArtistGrid.new(@playlist.concert_headline_artists)
+    end
   end
 end

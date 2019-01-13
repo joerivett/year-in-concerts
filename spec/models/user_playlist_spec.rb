@@ -19,11 +19,11 @@ describe UserPlaylist do
 
     context 'when the user tracks a headliner' do
       it 'includes the tracked artist' do
-        expect(subject.__send__(:concert_headline_artists)).to include(tracked_artist)
+        expect(subject.concert_headline_artists).to include(tracked_artist)
       end
 
       it 'does not include the untracked headliners' do
-        expect(subject.__send__(:concert_headline_artists)).not_to include(untracked_artist)
+        expect(subject.concert_headline_artists).not_to include(untracked_artist)
       end
     end
 
@@ -33,7 +33,7 @@ describe UserPlaylist do
       end
 
       it 'includes all the headliners on the lineup' do
-        expect(subject.__send__(:concert_headline_artists)).to match_array(event.headliners)
+        expect(subject.concert_headline_artists).to match_array(event.headliners)
       end
     end
 
@@ -42,7 +42,7 @@ describe UserPlaylist do
       let(:user) { double(User, previous_year_concerts: [event, event_2]) }
 
       it 'only includes the artist once' do
-        artists = subject.__send__(:concert_headline_artists)
+        artists = subject.concert_headline_artists
         expect(artists.length).to eq(1)
         expect(artists.first).to eq(tracked_artist)
       end
@@ -63,7 +63,7 @@ describe UserPlaylist do
       end
 
       it 'returns artists in the order in which they were seen' do
-        artists = subject.__send__(:concert_headline_artists)
+        artists = subject.concert_headline_artists
         expect(artists.length).to eq(3)
         expect(artists[0]).to eq(tracked_artist)
         expect(artists[1]).to eq(artist)

@@ -1,0 +1,5 @@
+<div id="artist-art">
+  <% artist_grid.artist_cells.each do |cell_artist| %>
+    <div class="cell" style="width: <%= artist_grid.cell_width %>%; background-color: <%= artist_grid.random_colour %>; background-image: <%= artist_grid.background_image_for(cell_artist) %>" title="<%= artist_grid.title_for(cell_artist) %>"></div>
+  <% end %>
+</div>

@@ -55,6 +55,19 @@ class UserPlaylist
     end
   end
 
+  # Get headline artists of gigs attended
+  # TODO: strip country suffix?
+  def concert_headline_artists
+    chronological_concerts_attended = user.previous_year_concerts.reverse
+    names = chronological_concerts_attended.map do |event|
+      # Prioritise tracked headliners if any
+      tracked_headliners = event.headliners.select { |headliner| user.user_tracks_artist?(headliner) }
+      tracked_headliners.any? ? tracked_headliners : event.headliners
+    end
+
+    names.flatten.uniq(&:id)
+  end
+
   private
 
   # Get Spotify artist ids from artist names
@@ -82,18 +95,4 @@ class UserPlaylist
     end
     playlist
   end
-
-  # Get headline artists of gigs attended
-  # TODO: strip country suffix?
-  def concert_headline_artists
-    chronological_concerts_attended = user.previous_year_concerts.reverse
-    names = chronological_concerts_attended.map do |event|
-      # Prioritise tracked headliners if any
-      tracked_headliners = event.headliners.select { |headliner| user.user_tracks_artist?(headliner) }
-      tracked_headliners.any? ? tracked_headliners : event.headliners
-    end
-
-    names.flatten.uniq(&:id)
-  end
-
 end

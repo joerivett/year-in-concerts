@@ -4,13 +4,17 @@
       Unable to find any songs to add to your 2018 In Concerts playlist, did you mark attendance on any concerts over 2018?
     </p>
   <% else %>
-    <p>
-      In 2018 you attended <%= "#{playlist.concert_count} #{'concert'.pluralize(playlist.concert_count)}" %>
-      <% if playlist.festival_count > 0 %>
-      and
-      <%= "#{playlist.festival_count} #{'festival'.pluralize(playlist.festival_count)}" %>!
-      <% end %>
-    </p>
+    <div id="gigography-overview">
+      <%= render partial: "artist_grid", object: playlist.artist_grid %>
+      <p>
+        In 2018 you attended <%= "#{playlist.concert_count} #{'concert'.pluralize(playlist.concert_count)}" %>
+        <% if playlist.festival_count > 0 %>
+        and
+        <%= "#{playlist.festival_count} #{'festival'.pluralize(playlist.festival_count)}" %>
+        <% end %>
+        🤘
+      </p>
+    </div>
     <p>
       Here's a playlists to take you back:
     </p>
