@@ -29,6 +29,10 @@ class User
     @festivals ||= events.select(&:festival?)
   end
 
+  def venue_count
+    @venue_count ||= events.map { |event| event.venue['id'] }.uniq.count
+  end
+
   def concert_count
     concerts.length
   end

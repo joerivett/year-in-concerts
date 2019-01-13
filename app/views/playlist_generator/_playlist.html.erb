@@ -7,11 +7,7 @@
     <div id="gigography-overview">
       <%= render partial: "artist_grid", object: playlist.artist_grid %>
       <p>
-        In 2018 you attended <%= "#{playlist.concert_count} #{'concert'.pluralize(playlist.concert_count)}" %>
-        <% if playlist.festival_count > 0 %>
-        and
-        <%= "#{playlist.festival_count} #{'festival'.pluralize(playlist.festival_count)}" %>
-        <% end %>
+        <%= playlist.summary %>
         🤘
       </p>
     </div>

@@ -78,6 +78,10 @@ module Services
       @data['type'] == 'Festival'
     end
 
+    def venue
+      @data['venue']
+    end
+
     def headliners
       @headliners ||= begin
         @data['performance']

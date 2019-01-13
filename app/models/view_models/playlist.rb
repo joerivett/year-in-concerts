@@ -16,6 +16,18 @@ module ViewModels
       end
     end
 
+    def summary
+      overview = ""
+      overview << "In 2018 you attended #{concert_count} #{'concert'.pluralize(concert_count)}"
+      if festival_count > 0
+        overview << " and #{festival_count} #{'festival'.pluralize(festival_count)}"
+      end
+      if venue_count > 1
+        overview << ", at #{venue_count} different venues"
+      end
+      overview
+    end
+
     def playlist_size
       @playlist.generated_playlist.total
     end
@@ -34,6 +46,10 @@ module ViewModels
 
     def festival_count
       @playlist.user.festival_count
+    end
+
+    def venue_count
+      @playlist.user.venue_count
     end
 
     def artist_grid
