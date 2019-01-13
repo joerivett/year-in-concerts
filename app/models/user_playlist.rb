@@ -23,8 +23,9 @@ class UserPlaylist
     begin
       spotify = ::Services::SpotifyApi.new(@spotify_auth)
 
-      spotify_artists = get_spotify_artists(spotify)
-      playlist_tracks = get_top_tracks(spotify_artists, spotify)
+      playlist_artists = concert_headline_artists
+      spotify_artists = spotify_artists_from_names(playlist_artists, spotify)
+      playlist_tracks = spotify_top_tracks(spotify_artists, spotify)
 
       # Create user playlist
       @generated_playlist = build_playlist(playlist_tracks, spotify)
@@ -56,23 +57,19 @@ class UserPlaylist
 
   private
 
-  # Get Spotify artist ids
-  def get_spotify_artists(spotify)
-    @spotify_artists ||= begin
-      spotify_artists = artist_names.reverse.map do |artist_name|
-        spotify.get_artist(artist_name)
-      end
-
-      spotify_artists.reject(&:nil?)
+  # Get Spotify artist ids from artist names
+  def spotify_artists_from_names(artist_names, spotify)
+    spotify_artists = artist_names.map do |artist|
+      spotify.get_artist(artist.name)
     end
+
+    spotify_artists.reject(&:nil?)
   end
 
   # Get top tracks for each artist
-  def get_top_tracks(spotify_artists, spotify)
-    @top_tracks ||= begin
-      spotify_artists.map do |artist|
-        spotify.top_tracks(artist, :GB)
-      end
+  def spotify_top_tracks(spotify_artists, spotify)
+    spotify_artists.map do |artist|
+      spotify.top_tracks(artist, :GB)
     end
   end
 
@@ -88,13 +85,15 @@ class UserPlaylist
 
   # Get headline artists of gigs attended
   # TODO: strip country suffix?
-  def artist_names
-    @artist_names ||= begin
-      names = user.previous_year_concerts.map do |event|
-        event.headliners
-      end
-      names.flatten.uniq
+  def concert_headline_artists
+    chronological_concerts_attended = user.previous_year_concerts.reverse
+    names = chronological_concerts_attended.map do |event|
+      # Prioritise tracked headliners if any
+      tracked_headliners = event.headliners.select { |headliner| user.user_tracks_artist?(headliner) }
+      tracked_headliners.any? ? tracked_headliners : event.headliners
     end
+
+    names.flatten.uniq(&:id)
   end
 
 end

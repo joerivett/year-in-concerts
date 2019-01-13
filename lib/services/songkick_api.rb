@@ -11,6 +11,10 @@ module Services
         paginated_get("/users/#{username}/gigography.json?order=desc", Event, time_limit)
       end
 
+      def tracked_artists(username)
+        paginated_get("/users/#{username}/artists/tracked.json", Artist)
+      end
+
       def paginated_get(url, klass, time_limit = nil)
         results = []
         page = 1
@@ -78,7 +82,7 @@ module Services
       @headliners ||= begin
         @data['performance']
         .reject { |performance| performance['billing'] == 'support' }
-        .map { |performance| Artist.new(performance['artist']['displayName']) }
+        .map { |performance| Artist.new(performance['artist']) }
       end
     end
   end

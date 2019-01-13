@@ -1,4 +1,6 @@
 ENV['RAILS_ENV'] = 'test'
 
-require "active_record/railtie"
-require "action_controller/railtie"
+require File.expand_path('../../config/environment', __FILE__)
+
+require 'action_controller/railtie'
+require 'active_support/railtie'

@@ -37,10 +37,18 @@ class User
     festivals.length
   end
 
+  def user_tracks_artist?(artist)
+    tracked_artists.any? { |tracked_artist| tracked_artist.id == artist.id }
+  end
+
   private
 
   def events
     @events ||= ::Services::SongkickApi.gigography(@sk_username, Date.strptime('2018-01-01', '%Y-%m-%d'))
+  end
+
+  def tracked_artists
+    @tracked_artists ||= ::Services::SongkickApi.tracked_artists(@sk_username)
   end
 
 end
