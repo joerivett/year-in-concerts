@@ -80,13 +80,18 @@ var PlaylistGenerator = {
   },
 
   playlistError: function(e) {
-    $('#response').html(e.responseText);
+    if (e.status == 503) {
+      $('#response').html('Looks like you attended a whole lotta gigs in 2018! Your playlist took a long time to build and I just can’t wait any longer, so you’ll have to open Spotify to view it.');
+      this.sendEvent({'eventCategory': 'playlist_generate', 'eventAction': 'error', 'eventLabel': '503_server_error'});
+    }
+    else {
+      $('#response').html(e.responseText);
+      this.sendEvent({'eventCategory': 'playlist_generate', 'eventAction': 'error', 'eventLabel': $.trim($('#response').text())});
+    }
     $('#response').show();
     $('#connect-to-songkick').show();
     $('#user-form').show();
     $('#loading').hide();
-
-    this.sendEvent({'eventCategory': 'playlist_generate', 'eventAction': 'error', 'eventLabel': $.trim($('#response').text())});
   },
 
   spotifyButtonClick: function(e) {
