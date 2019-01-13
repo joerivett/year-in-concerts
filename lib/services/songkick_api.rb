@@ -78,8 +78,22 @@ module Services
       @headliners ||= begin
         @data['performance']
         .reject { |performance| performance['billing'] == 'support' }
-        .map { |performance| performance['artist']['displayName'] }
+        .map { |performance| Artist.new(performance['artist']['displayName']) }
       end
+    end
+  end
+
+  class Artist
+    def initialize(artist_hash)
+      @data = artist_hash
+    end
+
+    def name
+      @data['displayName']
+    end
+
+    def id
+      @data['id']
     end
   end
 end
