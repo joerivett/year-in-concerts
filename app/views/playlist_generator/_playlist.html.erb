@@ -17,7 +17,7 @@
     <iframe src="<%= playlist.embed_link %>" width="500" height="380" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
     <% if playlist.playlist_size > 100 %>
       <p>
-        You’ll see more songs if you <a href="<%= playlist.link %>">open the playlist in Spotify</a>.
+        You’ll see more songs if you <a href="<%= playlist.link %>" target="_blank">open the playlist in Spotify</a>.
       </p>
     <% end %>
   <% end %>
