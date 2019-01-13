@@ -4,7 +4,7 @@ module Services
     class APIError < StandardError; end
     class << self
       API_KEY = ENV['SONGKICK_API_KEY']
-      API_ENDPOINT = 'http://api.songkick.com/api/3.0'
+      API_ENDPOINT = 'https://api.songkick.com/api/3.0'
 
       # time_limit: pull all gigs back to a certain date
       def gigography(username, time_limit = nil)
