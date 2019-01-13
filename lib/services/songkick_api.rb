@@ -8,24 +8,30 @@ module Services
 
       # time_limit: pull all gigs back to a certain date
       def gigography(username, time_limit = nil)
-        events = []
+        paginated_get("/users/#{username}/gigography.json?order=desc", Event, time_limit)
+      end
+
+      def paginated_get(url, klass, time_limit = nil)
+        results = []
         page = 1
+        resource_name = klass.name.demodulize.downcase
         loop do
-          response = get("/users/#{username}/gigography.json?order=desc&page=#{page}")
+          url += (url.include? "?") ? "&page=#{page}" : "?page=#{page}"
+          response = get(url)
           raise APIError if response.data['resultsPage']['status'] == 'error'
 
-          results = response.data['resultsPage']['results']
-          break unless results['event'].present?
+          page_results = response.data['resultsPage']['results']
+          break unless page_results[resource_name].present?
 
-          events += results['event'].map do |event_hash|
-            Event.new(event_hash)
+          results += page_results[resource_name].map do |resource_hash|
+            klass.new(resource_hash)
           end
-          max_events = response.data['resultsPage']['totalEntries'].to_i
+          max_results = response.data['resultsPage']['totalEntries'].to_i
 
-          break unless get_next_page?(events, max_events, time_limit)
+          break unless get_next_page?(results, max_results, time_limit)
           page += 1
         end
-        events
+        results
       end
 
       def get(endpoint)
@@ -44,13 +50,13 @@ module Services
 
       private
 
-      def get_next_page?(events, max_events, time_limit = nil)
+      def get_next_page?(results, max_results, time_limit = nil)
         # Got then all already
-        return false if events.length == max_events
+        return false if results.length == max_results
         # Keep going as no time limitation
         return true unless time_limit.present?
         # If oldest event in this batch is before the date limit, return true
-        return events.last.date > time_limit
+        return results.last.date > time_limit
       end
     end
   end
