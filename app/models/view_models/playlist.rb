@@ -41,15 +41,15 @@ module ViewModels
     end
 
     def concert_count
-      @playlist.user.concert_count
+      @playlist.user.previous_year_concert_count
     end
 
     def festival_count
-      @playlist.user.festival_count
+      @playlist.user.previous_year_festival_count
     end
 
     def venue_count
-      @playlist.user.venue_count
+      @playlist.user.previous_year_venue_count
     end
 
     def artist_grid

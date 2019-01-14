@@ -9,36 +9,23 @@ class User
   end
 
   def previous_year_concerts
-    @past_year_concerts ||= begin
-      raise NoEventsError unless concerts.length > 0
-
-      # Only get concerts in 2018
-      concerts.select! do |concert|
-        concert.date.year == 2018
-      end
-      raise NoEventsInPastYearError unless concerts.length > 0
-      concerts
-    end
+    @previous_year_concerts ||= previous_year_events.reject(&:festival?)
   end
 
-  def concerts
-    @concerts ||= events.reject(&:festival?)
+  def previous_year_festivals
+    @previous_year_festivals ||= previous_year_events.select(&:festival?)
   end
 
-  def festivals
-    @festivals ||= events.select(&:festival?)
+  def previous_year_venue_count
+    @venue_count ||= previous_year_events.map { |event| event.venue['id'] }.uniq.count
   end
 
-  def venue_count
-    @venue_count ||= events.map { |event| event.venue['id'] }.uniq.count
+  def previous_year_concert_count
+    previous_year_concerts.length
   end
 
-  def concert_count
-    concerts.length
-  end
-
-  def festival_count
-    festivals.length
+  def previous_year_festival_count
+    previous_year_festivals.length
   end
 
   def user_tracks_artist?(artist)
@@ -47,8 +34,22 @@ class User
 
   private
 
-  def events
-    @events ||= ::Services::SongkickApi.gigography(@sk_username, Date.strptime('2018-01-01', '%Y-%m-%d'))
+  def previous_year_events
+    @previous_year_events ||= begin
+      raise NoEventsError if gigography.length == 0
+
+      # Only get events in 2018
+      events = gigography.select do |event|
+        event.date.year == 2018
+      end
+
+      raise NoEventsInPastYearError if events.length == 0
+      events
+    end
+  end
+
+  def gigography
+    @gigography ||= ::Services::SongkickApi.gigography(@sk_username, Date.strptime('2018-01-01', '%Y-%m-%d'))
   end
 
   def tracked_artists
