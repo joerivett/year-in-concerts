@@ -27,12 +27,11 @@
           <img src="<%= @page.spotify_image %>" alt="<%= @page.spotify_username %>" />
         <% end %>
       </div>
-      <form action="/playlist/create" method="post" id="user-form">
-        <input type="text" id="username" name="username" value="Your Songkick username" class="empty" />
-        <input type="hidden" id="spotify_auth" name="spotify_auth" />
-
-        <input type="submit" id="go" value="Let’s go" />
-      </form>
+      <%= form_tag('/playlist/create', method: :post, id: 'user-form') do %>
+        <%= text_field_tag('username', 'Your Songkick username', class: 'empty') %>
+        <%= hidden_field_tag('spotify_auth') %>
+        <%= submit_tag('Let’s go', id: 'go') %>
+      <% end %>
     </div>
   <% end %>
 

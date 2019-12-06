@@ -20,8 +20,9 @@ var PlaylistGenerator = {
     e.preventDefault();
     $('.error').hide();
 
-    var form = $(e.currentTarget);
-    var val = form.find('#username').val();
+    var form = $(e.currentTarget),
+        val = form.find('#username').val(),
+        authenticity_token = form.find('input[name="authenticity_token"]').val();
 
     if (val.length == 0 || val == this.usernameStartText) {
       $('.error').text('Please enter your Songkick username');
@@ -34,7 +35,8 @@ var PlaylistGenerator = {
         url: form.attr('action'),
         method: 'post',
         data: {
-          username: val
+          username: val,
+          authenticity_token: authenticity_token
         },
         success: this.playlistLoaded.bind(this),
         error: this.playlistError.bind(this)
