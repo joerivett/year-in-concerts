@@ -5,19 +5,19 @@ module ViewModels
     end
 
     def embed_link
-      if @playlist.generated_playlist.present?
-        "https://open.spotify.com/embed/user/#{@playlist.generated_playlist.owner.id}/playlist/#{@playlist.generated_playlist.id}"
-      end
+      return '' unless @playlist.generated_playlist.present?
+
+      "https://open.spotify.com/embed/user/#{@playlist.generated_playlist.owner.id}/playlist/#{@playlist.generated_playlist.id}"
     end
 
     def link
-      if @playlist.generated_playlist.present?
-        "https://open.spotify.com/user/#{@playlist.generated_playlist.owner.id}/playlist/#{@playlist.generated_playlist.id}"
-      end
+      return '' unless @playlist.generated_playlist.present?
+
+      "https://open.spotify.com/user/#{@playlist.generated_playlist.owner.id}/playlist/#{@playlist.generated_playlist.id}"
     end
 
     def summary
-      overview = ""
+      overview = ''
       overview << "In 2018 you attended #{concert_count} #{'concert'.pluralize(concert_count)}"
       if festival_count > 0
         overview << " and #{festival_count} #{'festival'.pluralize(festival_count)},"

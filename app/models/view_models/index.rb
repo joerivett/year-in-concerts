@@ -20,6 +20,7 @@ module ViewModels
 
     def spotify_username
       return '' unless @spotify_auth.present?
+
       @spotify_username ||= begin
         username = @spotify_auth['id']
 
@@ -40,7 +41,9 @@ module ViewModels
     def spotify_image
       @spotify_image ||= begin
         return '' unless @spotify_auth.present?
+
         return '' unless @spotify_auth['info']['images'].present? && @spotify_auth['info']['images'].any?
+
         @spotify_auth['info']['images'].first['url']
       end
     end

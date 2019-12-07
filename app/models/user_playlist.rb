@@ -11,10 +11,10 @@ class UserPlaylist
 
   def build!
     if user.sk_username.blank?
-      @errors << "Please enter your Songkick username"
+      @errors << 'Please enter your Songkick username'
       return
     elsif @spotify_auth.blank?
-      @errors << "Please connect to Spotify first"
+      @errors << 'Please connect to Spotify first'
       return
     end
 
@@ -33,25 +33,23 @@ class UserPlaylist
       message = JSON.parse(e.message)['message']
       case message
       when 'Resource not found'
-        @errors << "There was an getting your Songkick concert history. Is your username correct?"
+        @errors << 'There was an getting your Songkick concert history. Is your username correct?'
       else
-        @errors << "There was an getting your Songkick concert history. Try again later"
+        @errors << 'There was an getting your Songkick concert history. Try again later'
       end
     rescue User::NoEventsError => e
-      @errors << "Looks like you haven't marked your attendance on any Songkick concerts"
+      @errors << 'Looks like you haven’t marked your attendance on any Songkick concerts'
     rescue User::NoEventsInPastYearError => e
-      @errors << "Looks like you didn't mark your attendance on any Songkick concerts in 2018"
+      @errors << 'Looks like you didn’t mark your attendance on any Songkick concerts in 2018'
     rescue RestClient::BadGateway, RestClient::ServerBrokeConnection => e
       max_tries -= 1
       if max_tries > 0
         retry
       else
-        puts "ERROR: #{e.inspect}"
-        @errors << "Something has gone terribly wrong but I don't know how to deal with it. Try one more time, maybe you'll get lucky."
+        rescue_unknown_error(e)
       end
     rescue => e
-      puts "ERROR: #{e.inspect}"
-      @errors << "Something has gone terribly wrong but I don't know how to deal with it. Try one more time, maybe you'll get lucky."
+      rescue_unknown_error(e)
     end
   end
 

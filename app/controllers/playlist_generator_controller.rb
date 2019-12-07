@@ -20,7 +20,7 @@ class PlaylistGeneratorController < ApplicationController
     playlist_view = ViewModels::Playlist.new(playlist)
 
     status = playlist_view.errors? ? 417 : 200
-    render :partial => 'playlist', :object => playlist_view, :status => status
+    render partial: 'playlist', object: playlist_view, status: status
   end
 
   def spotify
