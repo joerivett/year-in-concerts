@@ -4,6 +4,8 @@ require 'base64'
 require 'json'
 
 class PlaylistGeneratorController < ApplicationController
+  helper_method :last_year
+
   def index
     @page = ViewModels::Index.new(cookies[:spotify_auth], params)
 
@@ -14,7 +16,7 @@ class PlaylistGeneratorController < ApplicationController
     spotify_auth = cookies[:spotify_auth]
     sk_username = params[:username]
     user = User.new(sk_username)
-    playlist = UserPlaylist.new(user, spotify_auth)
+    playlist = UserPlaylist.new(user, last_year, spotify_auth)
     playlist.build!
 
     playlist_view = ViewModels::Playlist.new(playlist)
@@ -40,5 +42,9 @@ class PlaylistGeneratorController < ApplicationController
 
   def omniauth_failure
     redirect_to "#{root_path}?error=spotify_access_denied"
+  end
+
+  def last_year
+    @last_year ||= (Date.current.beginning_of_year - 1.year).year
   end
 end

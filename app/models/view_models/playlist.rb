@@ -18,7 +18,7 @@ module ViewModels
 
     def summary
       overview = ''
-      overview << "In 2018 you attended #{concert_count} #{'concert'.pluralize(concert_count)}"
+      overview << "In #{@playlist.playlist_year} you attended #{concert_count} #{'concert'.pluralize(concert_count)}"
       if festival_count > 0
         overview << " and #{festival_count} #{'festival'.pluralize(festival_count)},"
       end
@@ -41,15 +41,15 @@ module ViewModels
     end
 
     def concert_count
-      @playlist.user.previous_year_concert_count
+      @playlist.user.number_of_concerts_attended_in_year(@playlist.playlist_year)
     end
 
     def festival_count
-      @playlist.user.previous_year_festival_count
+      @playlist.user.number_of_festivals_attended_in_year(@playlist.playlist_year)
     end
 
     def venue_count
-      @playlist.user.previous_year_venue_count
+      @playlist.user.venues_attended_in_year(@playlist.playlist_year)
     end
 
     def artist_grid

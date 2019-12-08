@@ -49,7 +49,7 @@ module Services
       end
 
       def http
-        Songkick::Transport::HttParty.new(API_ENDPOINT, :timeout => 10)
+        @@http ||= Songkick::Transport::HttParty.new(API_ENDPOINT, timeout: 10)
       end
 
       private

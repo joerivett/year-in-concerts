@@ -1,10 +1,9 @@
 class UserPlaylist
-  PLAYLIST_NAME = '2018 In Concerts'
+  attr_reader :errors, :generated_playlist, :user, :playlist_year
 
-  attr_reader :errors, :generated_playlist, :user
-
-  def initialize(user, spotify_auth)
+  def initialize(user, playlist_year, spotify_auth)
     @user = user
+    @playlist_year = playlist_year
     @spotify_auth = spotify_auth
     @errors = []
   end
@@ -40,7 +39,7 @@ class UserPlaylist
     rescue User::NoEventsError => e
       @errors << 'Looks like you haven’t marked your attendance on any Songkick concerts'
     rescue User::NoEventsInPastYearError => e
-      @errors << 'Looks like you didn’t mark your attendance on any Songkick concerts in 2018'
+      @errors << "Looks like you didn’t mark your attendance on any Songkick concerts in #{playlist_year}"
     rescue RestClient::BadGateway, RestClient::ServerBrokeConnection => e
       max_tries -= 1
       if max_tries > 0
@@ -56,7 +55,7 @@ class UserPlaylist
   # Get headline artists of gigs attended
   # TODO: strip country suffix?
   def concert_headline_artists
-    chronological_concerts_attended = user.previous_year_concerts.reverse
+    chronological_concerts_attended = user.concerts_attended_in_year(playlist_year).reverse
     names = chronological_concerts_attended.map do |event|
       # Prioritise tracked headliners if any
       tracked_headliners = event.headliners.select { |headliner| user.user_tracks_artist?(headliner) }
@@ -85,12 +84,21 @@ class UserPlaylist
   end
 
   def build_playlist(playlist_tracks, spotify)
-    playlist = spotify.create_playlist(PLAYLIST_NAME)
+    playlist = spotify.create_playlist(playlist_name)
     track_uris = playlist_tracks.flatten.map(&:uri)
     # Add to user playlist in batches (minimise request URL length)
     track_uris.each_slice(10) do |tracks|
       spotify.add_tracks_to_playlist(playlist, tracks)
     end
     playlist
+  end
+
+  def rescue_unknown_error(e)
+    puts "ERROR: #{e.inspect}"
+    @errors << 'Something has gone terribly wrong but I don’t know how to deal with it. Try one more time, maybe you’ll get lucky.'
+  end
+
+  def playlist_name
+    "#{playlist_year} In Concerts"
   end
 end

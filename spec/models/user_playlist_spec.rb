@@ -2,14 +2,14 @@ require 'spec_helper'
 
 describe UserPlaylist do
   subject do
-    described_class.new(user, nil)
+    described_class.new(user, 2019, nil)
   end
 
   describe '#concert_headline_artists' do
     let(:tracked_artist) { double('Artist', id: 1) }
     let(:untracked_artist) { double('Artist', id: 2) }
     let(:event) { double('Event', headliners: [tracked_artist, untracked_artist]) }
-    let(:user) { double(User, previous_year_concerts: [event]) }
+    let(:user) { double(User, concerts_attended_in_year: [event]) }
 
     before do
       allow(subject).to receive(:user).and_return(user)
@@ -39,7 +39,7 @@ describe UserPlaylist do
 
     context 'when the user has seen the same artist multiple times in the year' do
       let(:event_2) { double('Event', headliners: [tracked_artist]) }
-      let(:user) { double(User, previous_year_concerts: [event, event_2]) }
+      let(:user) { double(User, concerts_attended_in_year: [event, event_2]) }
 
       it 'only includes the artist once' do
         artists = subject.concert_headline_artists
@@ -53,9 +53,9 @@ describe UserPlaylist do
       let(:artist_2) { double('Artist', id: 4) }
       let(:event_2) { double('Event', headliners: [artist]) }
       let(:event_3) { double('Event', headliners: [artist_2]) }
-      # Note the order of events in previous_year_concerts. The Songkick API
+      # Note the order of events in concerts_attended_in_year. The Songkick API
       # returns gigography events in order of recency (most recent first)
-      let(:user) { double(User, previous_year_concerts: [event_3, event_2, event]) }
+      let(:user) { double(User, concerts_attended_in_year: [event_3, event_2, event]) }
 
       before do
         allow(user).to receive(:user_tracks_artist?).with(artist).and_return(false)

@@ -1,7 +1,7 @@
 <% unless playlist.errors? %>
   <% if playlist.playlist_size == 0 %>
     <p>
-      Unable to find any songs to add to your 2018 In Concerts playlist, did you mark attendance on any concerts over 2018?
+      Unable to find any songs to add to your <%= last_year %> In Concerts playlist, did you mark attendance on any concerts over <%= last_year %>?
     </p>
   <% else %>
     <div id="gigography-overview">

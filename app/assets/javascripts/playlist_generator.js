@@ -83,7 +83,7 @@ var PlaylistGenerator = {
 
   playlistError: function(e) {
     if (e.status == 503) {
-      $('#response').html('Looks like you attended a whole lotta gigs in 2018! Your playlist took a long time to build and I just can’t wait any longer, so close your eyes, count to twenty then open Spotify to view it.');
+      $('#response').html('Looks like you attended a whole lotta gigs! Your playlist is taking a long time to build, so close your eyes, count to twenty then open Spotify to view it.');
       this.sendEvent({'eventCategory': 'playlist_generate', 'eventAction': 'error', 'eventLabel': '503_server_error'});
     }
     else {
