@@ -6,13 +6,30 @@
   <% else %>
     <div id="gigography-overview">
       <%= render partial: "artist_grid", object: playlist.artist_grid %>
-      <p>
-        <%= playlist.summary %>
+      <div id="summary">
+        <p>
+          In <%= last_year %> you attended
+        </p>
+        <ul>
+          <li>
+            <h2><%= playlist.concert_count %></h2> <span><%= 'concert'.pluralize(playlist.concert_count) %></span>
+          </li>
+          <% if playlist.festival_count > 0 %>
+          <li>
+            <h2><%= playlist.festival_count %></h2> <span><%= 'festival'.pluralize(playlist.festival_count) %></span>
+          </li>
+          <% end %>
+          <% if playlist.venue_count > 1 %>
+          <li>
+            <h2><%= playlist.venue_count %></h2> <span>different venues</span>
+          </li>
+          <% end %>
+        </ul>
         🤘
-      </p>
+      </div>
     </div>
     <p>
-      Here's a playlist to take you back:
+      Here's a playlist to take you back.
     </p>
     <iframe src="<%= playlist.embed_link %>" width="500" height="380" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
     <% if playlist.playlist_size > 100 %>

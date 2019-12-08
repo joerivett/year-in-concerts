@@ -249,12 +249,30 @@ p
   margin-bottom: 20px;
 }
 
-#gigography-overview p
+#gigography-overview #summary
 {
   flex-basis: 300px;
   display: flex;
   flex-direction: column;
   justify-content: center;
+}
+
+#gigography-overview ul
+{
+  padding: 0;
+}
+
+#gigography-overview ul li
+{
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+#gigography-overview h2
+{
+  margin: 0;
+  display: inline-block;
 }
 
 #artist-art

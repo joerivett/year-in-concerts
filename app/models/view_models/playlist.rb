@@ -16,18 +16,6 @@ module ViewModels
       "https://open.spotify.com/user/#{@playlist.generated_playlist.owner.id}/playlist/#{@playlist.generated_playlist.id}"
     end
 
-    def summary
-      overview = ''
-      overview << "In #{@playlist.playlist_year} you attended #{concert_count} #{'concert'.pluralize(concert_count)}"
-      if festival_count > 0
-        overview << " and #{festival_count} #{'festival'.pluralize(festival_count)},"
-      end
-      if venue_count > 1
-        overview << " at #{venue_count} different venues"
-      end
-      overview
-    end
-
     def playlist_size
       @playlist.generated_playlist.total
     end
