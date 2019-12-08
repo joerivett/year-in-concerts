@@ -66,44 +66,4 @@ module Services
       end
     end
   end
-
-  class Event
-    def initialize(event_hash)
-      @data = event_hash
-    end
-
-    def date
-      @date ||= Date.strptime(@data['start']['date'], '%Y-%m-%d')
-    end
-
-    def festival?
-      @data['type'] == 'Festival'
-    end
-
-    def venue
-      @data['venue']
-    end
-
-    def headliners
-      @headliners ||= begin
-        @data['performance']
-        .reject { |performance| performance['billing'] == 'support' }
-        .map { |performance| Artist.new(performance['artist']) }
-      end
-    end
-  end
-
-  class Artist
-    def initialize(artist_hash)
-      @data = artist_hash
-    end
-
-    def name
-      @data['displayName']
-    end
-
-    def id
-      @data['id']
-    end
-  end
 end
