@@ -7,13 +7,13 @@ module ViewModels
     def embed_link
       return '' unless @playlist.generated_playlist.present?
 
-      "https://open.spotify.com/embed/user/#{@playlist.generated_playlist.owner.id}/playlist/#{@playlist.generated_playlist.id}"
+      "https://open.spotify.com/embed/playlist/#{@playlist.generated_playlist.id}"
     end
 
     def link
       return '' unless @playlist.generated_playlist.present?
 
-      "https://open.spotify.com/user/#{@playlist.generated_playlist.owner.id}/playlist/#{@playlist.generated_playlist.id}"
+      "https://open.spotify.com/playlist/#{@playlist.generated_playlist.id}"
     end
 
     def playlist_size
