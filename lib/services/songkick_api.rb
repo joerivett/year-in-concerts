@@ -55,7 +55,7 @@ module Services
       private
 
       def get_next_page?(results, max_results, time_limit = nil)
-        # Got then all already
+        # Got them all already
         return false if results.length == max_results
 
         # Keep going as no time limitation

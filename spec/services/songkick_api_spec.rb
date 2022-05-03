@@ -29,7 +29,6 @@ describe Services::SongkickApi do
     end
   end
 
-
   before do
     allow(subject).to receive(:get).and_return(response)
   end
@@ -37,7 +36,7 @@ describe Services::SongkickApi do
   describe '.paginated_get' do
     context 'when there is only a single page of results' do
       let(:total_entries) { 1 }
-      it 'calls only makes one request' do
+      it 'only makes one request' do
         expect(subject).to receive(:get)
           .once
         subject.paginated_get('/endpoint', Event)
@@ -46,7 +45,7 @@ describe Services::SongkickApi do
 
     context 'when there are multiple pages of results' do
       let(:total_entries) { 2 }
-      it 'calls only makes one request' do
+      it 'makes multiple requests' do
         expect(subject).to receive(:get)
           .twice
         subject.paginated_get('/endpoint', Event)

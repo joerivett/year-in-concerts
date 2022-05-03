@@ -48,7 +48,7 @@ describe UserPlaylist do
       end
     end
 
-    context 'when the user seen different artists over the year' do
+    context 'when the user has seen different artists over the year' do
       let(:artist) { double('Artist', id: 3) }
       let(:artist_2) { double('Artist', id: 4) }
       let(:event_2) { double('Event', headliners: [artist]) }
