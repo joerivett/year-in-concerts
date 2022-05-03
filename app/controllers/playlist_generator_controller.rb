@@ -4,6 +4,8 @@ require 'base64'
 require 'json'
 
 class PlaylistGeneratorController < ApplicationController
+  before_action :enforce_xhr, only: [:create]
+
   helper_method :previous_year
 
   def index
@@ -22,7 +24,7 @@ class PlaylistGeneratorController < ApplicationController
 
     if user_playlist.errors?
       error_view = ViewModels::Error.new(user_playlist.errors)
-      render partial: 'errors', object: error_view, status: :expectation_failed
+      render partial: 'errors', object: error_view, status: :bad_request
     else
       playlist_view = ViewModels::Playlist.new(user_playlist)
       render partial: 'playlist', object: playlist_view, status: :ok
@@ -50,5 +52,14 @@ class PlaylistGeneratorController < ApplicationController
 
   def previous_year
     @previous_year ||= (Date.current.beginning_of_year - 1.year).year
+  end
+
+  private
+
+  def enforce_xhr
+    unless request.xhr?
+      error_view = ViewModels::Error.new(['Invalid request'])
+      render(partial: 'errors', object: error_view, status: :bad_request) and return
+    end
   end
 end
