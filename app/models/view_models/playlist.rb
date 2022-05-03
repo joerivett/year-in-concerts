@@ -20,14 +20,6 @@ module ViewModels
       @playlist.generated_playlist.total
     end
 
-    def errors?
-      @playlist.errors.any?
-    end
-
-    def error_content
-      @playlist.errors.first
-    end
-
     def concert_count
       @playlist.user.number_of_concerts_attended_in_year(@playlist.playlist_year)
     end

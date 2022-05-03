@@ -65,6 +65,10 @@ class UserPlaylist
     names.flatten.uniq(&:id)
   end
 
+  def errors?
+    @errors.any?
+  end
+
   private
 
   # Get Spotify artist ids from artist names

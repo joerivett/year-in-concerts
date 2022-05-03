@@ -15,14 +15,18 @@ class PlaylistGeneratorController < ApplicationController
   def create
     spotify_auth = cookies[:spotify_auth]
     sk_username = params[:username]
+
     user = User.new(sk_username)
-    playlist = UserPlaylist.new(user, previous_year, spotify_auth)
-    playlist.build!
+    user_playlist = UserPlaylist.new(user, previous_year, spotify_auth)
+    user_playlist.build!
 
-    playlist_view = ViewModels::Playlist.new(playlist)
-
-    status = playlist_view.errors? ? 417 : 200
-    render partial: 'playlist', object: playlist_view, status: status
+    if user_playlist.errors?
+      error_view = ViewModels::Error.new(user_playlist.errors)
+      render partial: 'errors', object: error_view, status: :expectation_failed
+    else
+      playlist_view = ViewModels::Playlist.new(user_playlist)
+      render partial: 'playlist', object: playlist_view, status: :ok
+    end
   end
 
   def spotify
