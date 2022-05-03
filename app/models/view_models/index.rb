@@ -27,7 +27,7 @@ module ViewModels
         # Sometimes ID is an integer, sometimes it's the username
         # If integer, return full name
         unless (username.to_s =~ /^[0-9]+$/).nil?
-          username = @spotify_auth['info']['display_name'] rescue ''
+          username = spotify_info['display_name'] rescue ''
         end
 
         username
@@ -42,13 +42,19 @@ module ViewModels
       @spotify_image ||= begin
         return '' unless @spotify_auth.present?
 
-        return '' unless @spotify_auth['info']['images'].present? && @spotify_auth['info']['images'].any?
+        spotify_images = spotify_info.fetch('images', [])
 
-        @spotify_auth['info']['images'].first['url']
+        return '' unless spotify_images.any?
+
+        spotify_images.first['url']
       end
     end
 
-  private
+    private
+
+    def spotify_info
+      @spotify_info ||= @spotify_auth['info']
+    end
 
     def have_linked_spotify?
       @spotify_auth.present?
