@@ -38,6 +38,12 @@ module Services
         results
       end
 
+      def http
+        @@http ||= Songkick::Transport::HttParty.new(API_ENDPOINT, timeout: 10)
+      end
+
+      private
+
       def get(endpoint)
         begin
           url = endpoint << "&apikey=#{API_KEY}"
@@ -47,12 +53,6 @@ module Services
           raise APIError.new(error)
         end
       end
-
-      def http
-        @@http ||= Songkick::Transport::HttParty.new(API_ENDPOINT, timeout: 10)
-      end
-
-      private
 
       def get_next_page?(results, max_results, time_limit = nil)
         # Got them all already
