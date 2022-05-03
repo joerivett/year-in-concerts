@@ -1,14 +1,14 @@
 <% unless playlist.errors? %>
   <% if playlist.playlist_size == 0 %>
     <p>
-      Unable to find any songs to add to your <%= last_year %> In Concerts playlist, did you mark attendance on any concerts over <%= last_year %>?
+      Unable to find any songs to add to your <%= previous_year %> In Concerts playlist, did you mark attendance on any concerts over <%= previous_year %>?
     </p>
   <% else %>
     <div id="gigography-overview">
       <%= render partial: "artist_grid", object: playlist.artist_grid %>
       <div id="summary">
         <p>
-          In <%= last_year %> you attended
+          In <%= previous_year %> you attended
         </p>
         <ul>
           <li>

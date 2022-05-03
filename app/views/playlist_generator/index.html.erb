@@ -1,15 +1,15 @@
 <div id="cont">
   <h1>
-    <%= last_year %> In Concerts
+    <%= previous_year %> In Concerts
   </h1>
   <p>
-    Remember all those awesome concerts you went to in <%= last_year %>?
+    Remember all those awesome concerts you went to in <%= previous_year %>?
   </p>
   <p>
     Relive them with a personalised Spotify playlist.
   </p>
 
-  <% if @page.step_1? %>
+  <% unless @page.linked_spotify? %>
     <div id="connect-to-spotify">
       <p>
         First, connect to your Spotify account.

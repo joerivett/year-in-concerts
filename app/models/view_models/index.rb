@@ -14,8 +14,8 @@ module ViewModels
       end
     end
 
-    def step_1?
-      !have_linked_spotify?
+    def linked_spotify?
+      @spotify_auth.present?
     end
 
     def spotify_username
@@ -54,10 +54,6 @@ module ViewModels
 
     def spotify_info
       @spotify_info ||= @spotify_auth['info']
-    end
-
-    def have_linked_spotify?
-      @spotify_auth.present?
     end
   end
 end
