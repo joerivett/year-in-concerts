@@ -31,6 +31,20 @@ class PlaylistGeneratorController < ApplicationController
     end
   end
 
+  # This is the callback action from Spotify once a user has authenticated with
+  # Spotify and permitted this app to access to the requested scopes. At this point
+  # we have an oauth token and can use this to make requests to the Spotify API.
+  #
+  # Initially the design of this method looks strange, since it stores a cookie
+  # then redirects back to the index action. There is a reason for this:
+  #
+  # Since the UX is a 2-step process and the user next inputs their Songkick
+  # username, it is necessary to record this oauth token for submission in the
+  # subsquent request - this is achieved via a base64 encoded JSON cookie.
+  # This is a code-smell: this is sensitive data so we should be using a cipher to
+  # encrypt this hash when we write it into cookies. But since the oauth token
+  # is signed against this app's client secret, it is useless to an attacker
+  # unless they also somehow also accessed the secret
   def spotify
     return unless request.env['omniauth.auth'].present?
 
