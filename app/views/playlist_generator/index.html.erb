@@ -14,9 +14,11 @@
       <p>
         First, connect to your Spotify account.
       </p>
-      <a id="spotify-connect-btn" href="/auth/spotify">
-        Connect to Spotify
-      </a>
+      <%= form_tag('/auth/spotify', method: 'post') do %>
+        <button type='submit' id="spotify-connect-btn">
+          Connect to Spotify
+        </button>
+      <% end %>
       <br />
     </div>
   <% else %>

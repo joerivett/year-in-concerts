@@ -26,9 +26,12 @@ class PlaylistGeneratorController < ApplicationController
   end
 
   def spotify
+    p est.env['omniauth.auth'].present?
     return unless request.env['omniauth.auth'].present?
 
     auth = request.env['omniauth.auth']
+
+    p auth
 
     persist_hash = {}
     persist_hash['credentials'] = auth['credentials'].to_hash
